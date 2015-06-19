@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>Wordcloud</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.4/jqcloud.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.4/jqcloud-1.0.4.min.js"></script>
+
+<script type="text/javascript">
+	var words = [
+            {{ range . }}
+		{text: {{ .Word }}, weight: {{ .Value }} } ,
+            {{ end }}
+];
+
+$(document).ready(function() {
+		$("#demo").jQCloud(words, {
+			autoResize: true
+		});
+});
+
+</script>
+    <style type="text/css">
+      body {
+        background: #eee;
+        font-family: Helvetica, Arial, sans-serif;
+      }
+      #demo {
+        margin: 10px auto;
+        width: 800px;
+        height: 350px;
+        border: none;
+      }
+      #demo span.w10, #demo span.w9, #demo span.w8, #demo span.w7 {
+        text-shadow: 0px 1px 1px #ccc;
+      }
+      #demo span.w3, #demo span.w2, #demo span.w1 {
+        text-shadow: 0px 1px 1px #fff;
+}
+
+      #footer {
+        font-size: 13px;
+        color: #aaa;
+        text-align: center;
+        width: 600px;
+        margin: 30px auto;
+        padding: 0.5em;
+        text-shadow: 0px 1px 1px #fff;
+        border-top: 1px dotted #ddd;
+      }
+      #footer a {
+        color: #0af;
+        text-decoration: none;
+      }
+
+    </style>
+
+
+
+
+</head>
+<body>
+
+<div id="demo" style="border: 0px solid #ccc;"></div>
+ <div id="footer">
+      <a href="https://github.com/pblaas/golang-wordcloud">Golang Wordcloud</a> is an open-source <a href="http://golang.org">Go language</a> App by
+      <strong><a href="https://github.com/pblaas/golang-wordcloud">Pblaas</a></strong> based on: <br>
+      <a href="https://golang.org">Go language</a> |
+      <a href="https://www.mongodb.org">MongoDB</a> |
+      <a href="https://labix.org/mgo">mgo driver</a> |
+      <a href="http://getbootstrap.com/css/">CSS boostrap</a> |
+      <a href="http://mistic100.github.io/jQCloud/">jQCloud</a> | 
+      <a href="http://www.twitch.tv">Twitch.tv</a> Logs.
+ </div>
+</html>
