@@ -58,6 +58,9 @@ func main() {
 	channel := r.PathPrefix("/channels/{id}").Subrouter()
 	channel.Methods("GET").HandlerFunc(ChannelShowHandler)
 
+	keyword := r.PathPrefix("/twitter/{keyword}").Subrouter()
+	keyword.Methods("GET").HandlerFunc(TwitterKeywordShowHandler)
+
 	fmt.Println("Wordcloud Server started!")
 	http.ListenAndServe(":3001", r)
 }
@@ -83,6 +86,39 @@ func ChannelShowHandler(rw http.ResponseWriter, r *http.Request) {
 	session.SetMode(mgo.Monotonic, true)
 
 	c := session.DB("irclogs").C(id)
+
+	query := c.Find(nil)
+	var words []Wordcount
+	if err := query.All(&words); err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fp := path.Join("templates", "wcloud.html")
+	tmpl, err := template.ParseFiles(fp)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := tmpl.Execute(rw, words); err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+}
+
+func TwitterKeywordShowHandler(rw http.ResponseWriter, r *http.Request) {
+	keyword := mux.Vars(r)["keyword"]
+
+	session, err := mgo.Dial("localhost")
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+
+	//Optional. Switch the session to monotonic behavior
+	session.SetMode(mgo.Monotonic, true)
+
+	c := session.DB(keyword).C("word_count")
 
 	query := c.Find(nil)
 	var words []Wordcount
