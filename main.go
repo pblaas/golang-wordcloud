@@ -62,7 +62,7 @@ func main() {
 	keyword.Methods("GET").HandlerFunc(TwitterKeywordShowHandler)
 
 	fmt.Println("Wordcloud Server started!")
-	http.ListenAndServe(":3001", r)
+	http.ListenAndServe(":3002", r)
 }
 
 func HomeHandler(rw http.ResponseWriter, r *http.Request) {
@@ -120,7 +120,7 @@ func TwitterKeywordShowHandler(rw http.ResponseWriter, r *http.Request) {
 
 	c := session.DB(keyword).C("word_count")
 
-	query := c.Find(nil)
+	query := c.Find(nil).Sort("-value").Limit(75)
 	var words []Wordcount
 	if err := query.All(&words); err != nil {
 		http.Error(rw, err.Error(), http.StatusInternalServerError)
