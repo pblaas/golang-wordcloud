@@ -62,7 +62,7 @@ func main() {
 	keyword.Methods("GET").HandlerFunc(TwitterKeywordShowHandler)
 
 	fmt.Println("Wordcloud Server started!")
-	http.ListenAndServe(":3002", r)
+	http.ListenAndServe(":3001", r)
 }
 
 func HomeHandler(rw http.ResponseWriter, r *http.Request) {
