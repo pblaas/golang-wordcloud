@@ -89,6 +89,7 @@ $(document).ready(function() {
                        'height':400,
 		       'is3D': true,
 		       'backgroundColor': 'transparent',
+		       'sliceVisibilityThreshold': '.01',
 	};
 
         // Instantiate and draw our chart, passing in some options.
@@ -113,9 +114,6 @@ $(document).ready(function() {
       <a href="http://www.twitch.tv">Twitch.tv</a> Logs | 
       <a href="https://www.twitter.com">Twitter</a> keywords
  </div>
-
- <body>
-    <!--Div that will hold the pie chart-->
-    <center><div id="chart_div"></div></center>
+    <div id="chart_div" align="center"></div>
   </body>
 </html>
